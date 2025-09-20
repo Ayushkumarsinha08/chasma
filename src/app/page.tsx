@@ -1,102 +1,196 @@
+'use client';
+
 import Image from "next/image";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { CartLink } from '@/components/cart-link';
+import { useCart } from '@/lib/store/cart';
+
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+}
+
+const categories: Category[] = [
+  {
+    id: 'glasses',
+    name: 'Eyewear',
+    description: 'Stylish frames and sunglasses',
+    image: '/images/categories/glasses.jpg',
+  },
+  {
+    id: 'belts',
+    name: 'Belts',
+    description: 'Premium leather belts',
+    image: '/images/categories/belts.jpg',
+  },
+  {
+    id: 'watches',
+    name: 'Watches',
+    description: 'Luxury timepieces',
+    image: '/images/categories/watches.jpg',
+  },
+];
+
+const featuredProducts: Product[] = [
+  {
+    id: 1,
+    name: 'Ray-Ban Aviator',
+    price: 159.99,
+    category: 'glasses',
+    image: '/images/products/rayban.jpg',
+  },
+  {
+    id: 2,
+    name: 'Leather Belt Brown',
+    price: 49.99,
+    category: 'belts',
+    image: '/images/products/belt.jpg',
+  },
+  {
+    id: 3,
+    name: 'Classic Watch',
+    price: 299.99,
+    category: 'watches',
+    image: '/images/products/watch.jpg',
+  },
+];
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { addItem } = useCart();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <CartLink />
+      {/* Hero Section */}
+      <section className="relative h-[600px] flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800">
+        <div className="relative z-20 text-center text-white px-4">
+          <h1 className="text-5xl font-bold mb-4">Premium Fashion Accessories</h1>
+          <p className="text-xl mb-8">Discover our collection of eyewear, belts, and watches</p>
+          <Link href="/category/glasses">
+            <Button size="lg" className="bg-white text-black hover:bg-gray-100">
+              Shop Now
+            </Button>
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Categories Section */}
+      <section className="py-16 px-4 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-12">Shop by Category</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {categories.map((category) => (
+            <Link
+              href={'/category/' + category.id}
+              key={category.id}
+              className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="aspect-[4/3] relative">
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors z-10" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-20">
+                  <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
+                  <p className="text-sm opacity-90">{category.description}</p>
+                </div>
+                <Image src={category.image} alt={category.name} fill className="object-cover" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">Featured Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredProducts.map((product) => (
+              <div key={product.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                <div className="aspect-square relative">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">\${product.price.toFixed(2)}</span>
+                    <Button onClick={() => addItem({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      image: product.image
+                    })}>
+                      Add to Cart
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-16 px-4 bg-gray-900 text-white">
+        <div className="max-w-xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
+          <p className="mb-8">Subscribe to our newsletter for new products and exclusive offers</p>
+          <form className="flex gap-4 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-2 rounded-lg text-black"
+            />
+            <Button type="submit">Subscribe</Button>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 px-4 bg-gray-800 text-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="font-bold text-lg mb-4">About Us</h3>
+            <p className="text-gray-400">Premium fashion accessories for the modern lifestyle.</p>
+          </div>
+          <div>
+            <h3 className="font-bold text-lg mb-4">Categories</h3>
+            <ul className="space-y-2 text-gray-400">
+              {categories.map((category) => (
+                <li key={category.id}>{category.name}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-bold text-lg mb-4">Customer Service</h3>
+            <ul className="space-y-2 text-gray-400">
+              <li>Contact Us</li>
+              <li>Shipping Info</li>
+              <li>Returns & Exchanges</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-bold text-lg mb-4">Connect</h3>
+            <ul className="space-y-2 text-gray-400">
+              <li>Facebook</li>
+              <li>Instagram</li>
+              <li>Twitter</li>
+            </ul>
+          </div>
+        </div>
       </footer>
     </div>
   );
